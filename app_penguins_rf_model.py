@@ -1,4 +1,3 @@
-
 # Import necessary libraries
 import streamlit as st
 import pickle
@@ -47,13 +46,13 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Load the trained Random Forest model
-model_path = 'penguins_rf_model.pkl'
+# Load the trained Logistic Regression model
+model_path = 'penguin_log_reg_model.pkl'
 
 # Ensure the model file exists
 if os.path.exists(model_path):
     with open(model_path, 'rb') as file:
-        rf_model = pickle.load(file)
+        log_reg_model = pickle.load(file)
 else:
     st.error(f"Error: {model_path} not found. Please make sure the model file is available.")
     st.stop()
@@ -84,8 +83,8 @@ if st.sidebar.button("Predict Species"):
     # Convert inputs to model-compatible format
     input_data = np.array([[island_map[island], bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex_map[sex]]])
 
-    # Predict species
-    prediction = rf_model.predict(input_data)
+    # Predict species using Logistic Regression model
+    prediction = log_reg_model.predict(input_data)
     species_dict = {0: "Adelie", 1: "Chinstrap", 2: "Gentoo"}  # Mapping encoded values to species names
     species = species_dict[prediction[0]]
 
